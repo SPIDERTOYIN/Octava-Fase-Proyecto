@@ -1,0 +1,21 @@
+<h1>👤 Usuarios</h1>
+<a href="{{ url_for('nuevo_usuario') }}">➕ Nuevo usuario</a>
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th><th>Nombre</th><th>Email</th><th>Rol</th><th>Sucursal</th><th>Acciones</th>
+    </tr>
+    {% for u in usuarios %}
+    <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.nombre }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.rol }}</td>
+        <td>{{ u.sucursal.nombre if u.sucursal else 'Todas (dueño)' }}</td>
+        <td>
+            <a href="{{ url_for('editar_usuario', id=u.id) }}">✏️ Editar</a> |
+            <a href="{{ url_for('eliminar_usuario', id=u.id) }}">🗑️ Eliminar</a>
+        </td>
+    </tr>
+    {% endfor %}
+    <a href="{{ url_for('dashboard') }}" class="btn">⬅ Volver al menú</a>
+</table>

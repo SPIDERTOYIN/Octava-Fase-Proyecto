@@ -1,0 +1,27 @@
+<h1>{{ 'Editar' if usuario else 'Nuevo' }} Usuario</h1>
+<form method="POST">
+    <label>Nombre:</label>
+    <input type="text" name="nombre" value="{{ usuario.nombre if usuario else '' }}" required><br>
+    
+    <label>Email:</label>
+    <input type="email" name="email" value="{{ usuario.email if usuario else '' }}" required><br>
+    
+    <label>Contraseña:</label>
+    <input type="password" name="password"><br>
+    
+    <label>Rol:</label>
+    <select name="rol">
+        <option value="admin" {% if usuario and usuario.rol == 'admin' %}selected{% endif %}>Administrador</option>
+        <option value="dueno" {% if usuario and usuario.rol == 'dueno' %}selected{% endif %}>Dueño</option>
+    </select><br>
+    
+    <label>Sucursal (solo admins):</label>
+    <select name="sucursal_id">
+        <option value="">Ninguna (para dueños)</option>
+        {% for suc in sucursales %}
+        <option value="{{ suc.id }}" {% if usuario and usuario.sucursal_id == suc.id %}selected{% endif %}>{{ suc.nombre }}</option>
+        {% endfor %}
+    </select><br>
+    
+    <button type="submit">💾 Guardar</button>
+</form>

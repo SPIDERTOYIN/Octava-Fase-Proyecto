@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+  <h2>Detalles de la Sucursal: {{ sucursal.nombre }}</h2>
+  
+  <h3>Asistencias Registradas</h3>
+
+  <div class="export-buttons">
+    <a href="{{ url_for('exportar_asistencias', id=sucursal.id, formato='excel') }}" class="btn">📥 Exportar a Excel</a>
+    <a href="{{ url_for('exportar_asistencias', id=sucursal.id, formato='csv') }}" class="btn">📥 Exportar a CSV</a>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Empleado</th>
+          <th>Fecha</th>
+          <th>Hora de Entrada</th>
+          <th>Hora de Salida</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for emp in sucursal.empleados %}
+          {% for asis in emp.asistencias %}
+            <tr>
+              <td>{{ emp.nombre }}</td>
+              <td>{{ asis.fecha.strftime('%Y-%m-%d') if asis.fecha else '-' }}</td>
+              <td>{{ asis.hora_entrada.strftime('%H:%M:%S') if asis.hora_entrada else '-' }}</td>
+              <td>{{ asis.hora_salida.strftime('%H:%M:%S') if asis.hora_salida else '-' }}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="4">No hay asistencias registradas para esta sucursal.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

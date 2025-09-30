@@ -1,0 +1,18 @@
+<h1>🏢 Sucursales</h1>
+<a href="{{ url_for('nueva_sucursal') }}">➕ Nueva sucursal</a>
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th><th>Nombre</th><th>Acciones</th>
+    </tr>
+    {% for suc in sucursales %}
+    <tr>
+        <td>{{ suc.id }}</td>
+        <td>{{ suc.nombre }}</td>
+        <td>
+            <a href="{{ url_for('editar_sucursal', id=suc.id) }}">✏️ Editar</a> |
+            <a href="{{ url_for('eliminar_sucursal', id=suc.id) }}">🗑️ Eliminar</a>
+        </td>
+    </tr>
+    {% endfor %}
+    <a href="{{ url_for('dashboard') }}" class="btn">⬅ Volver al menú</a>
+</table>

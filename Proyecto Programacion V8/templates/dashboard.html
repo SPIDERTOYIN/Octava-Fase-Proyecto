@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+  <h2>Bienvenido, {{ usuario.nombre }}</h2>
+
+  {% if usuario.rol == "dueno" %}
+    <p>Panel de control de dueño:</p>
+    <ul>
+      <li><a href="{{ url_for('lista_usuarios') }}">👤 Administrar usuarios</a></li>
+      <li><a href="{{ url_for('lista_sucursales') }}">🏢 Administrar sucursales</a></li>
+
+    </ul>
+  {% endif %}
+
+  <p>Selecciona una sucursal para ver los detalles:</p>
+  <ul>
+    {% for suc in sucursales %}
+      <li><a href="{{ url_for('ver_sucursal', id=suc.id) }}">{{ suc.nombre }}</a></li>
+    {% endfor %}
+  </ul>
+
+  <br>
+  <a href="{{ url_for('logout') }}">🚪 Cerrar sesión</a>
+</div>
+{% endblock %}
