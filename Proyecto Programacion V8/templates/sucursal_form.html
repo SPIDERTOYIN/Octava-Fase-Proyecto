@@ -1,6 +1,0 @@
-<h1>{{ 'Editar' if sucursal else 'Nueva' }} Sucursal</h1>
-<form method="POST">
-    <label>Nombre:</label>
-    <input type="text" name="nombre" value="{{ sucursal.nombre if sucursal else '' }}" required><br>
-    <button type="submit">💾 Guardar</button>
-</form>
