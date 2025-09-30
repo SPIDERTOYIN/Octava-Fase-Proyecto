@@ -4,6 +4,7 @@ from models import db, Usuario, Empleado, Asistencia, Sucursal
 from datetime import datetime
 import pandas as pd
 from io import BytesIO
+import init_db
 
 # Inicializamos la aplicación Flask
 app = Flask(__name__)
@@ -19,6 +20,7 @@ db.init_app(app)
 # Creamos las tablas en caso de que no existan
 with app.app_context():
     db.create_all()
+    init_db.inicializar_db()
 
 # ---------------- LOGIN ----------------
 @app.route("/", methods=["GET", "POST"])
