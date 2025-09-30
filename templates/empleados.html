@@ -1,0 +1,19 @@
+<h1>👤 Empleados</h1>
+<a href="{{ url_for('nuevo_empleado') }}">➕ Nuevo empleado</a>
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th><th>Nombre</th><th>Huella ID</th><th>Sucursal</th><th>Acciones</th>
+    </tr>
+    {% for emp in empleados %}
+    <tr>
+        <td>{{ emp.id }}</td>
+        <td>{{ emp.nombre }}</td>
+        <td>{{ emp.huella_id }}</td>
+        <td>{{ emp.sucursal.nombre }}</td>
+        <td>
+            <a href="{{ url_for('editar_empleado', id=emp.id) }}">✏️ Editar</a> |
+            <a href="{{ url_for('eliminar_empleado', id=emp.id) }}">🗑️ Eliminar</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
