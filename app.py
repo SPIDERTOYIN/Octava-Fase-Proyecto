@@ -337,7 +337,44 @@ def registrar_accion(usuario_id, opcion, descripcion=""):
     db.session.add(nueva)
     db.session.commit()
 
+@app.route("/initdb/<clave>")
+def initdb(clave):
+    if clave != "clave123":
+        return "❌ Acceso denegado", 403
+
+    from models import db, Sucursal, Usuario, Empleado
+
+    db.drop_all()
+    db.create_all()
+
+    # Crear sucursales
+    s1 = Sucursal(nombre="Sucursal 1")
+    s2 = Sucursal(nombre="Sucursal 2")
+    db.session.add_all([s1, s2])
+
+    # Crear usuarios
+    dueno = Usuario(nombre="Dueño", email="dueno@empresa.com", rol="dueno", sucursal=s1)
+    dueno.set_password("1234")
+    admin = Usuario(nombre="Admin", email="admin@empresa.com", rol="admin", sucursal=s2)
+    admin.set_password("1234")
+    db.session.add_all([dueno, admin])
+
+    # Crear empleados con huellas distintas por sucursal
+    empleados = [
+        ("Juan Pérez", 1, s1),
+        ("María López", 2, s2),
+        ("Carlos Sánchez", 3, s1),
+        ("Ana Torres", 4, s2),
+        ("Luis Gómez", 5, s2)
+    ]
+    for nombre, huella, suc in empleados:
+        db.session.add(Empleado(nombre=nombre, huella_id=huella, sucursal=suc))
+
+    db.session.commit()
+    return "✅ Base de datos inicializada correctamente"
+
 # ---------------- EJECUTAR APP ----------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
 
